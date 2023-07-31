@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import {View,TouchableOpacity, SafeAreaView ,StyleSheet ,ImageBackground,Text} from'react-native';
+import {View,TouchableOpacity, SafeAreaView ,StyleSheet ,ImageBackground,Text,StatusBar,Image} from'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { loadFontsAsync } from './FontLoader';
 
@@ -33,12 +33,17 @@ const Home = () => {
     return (
         
         <SafeAreaView style={styles.container}>
+          <StatusBar hidden={true} />
        <ImageBackground
-        source={require('../assets/images/demo.png')}
+        source={require('../assets/images/demo2.png')}
         style={{ flex: 1 }}
         resizeMode="cover"
       >
         <View style={styles.view} >
+        <Image
+        source={require('../assets/images/iconb.png')}
+        style={styles.Logo}
+      /> 
         <TouchableOpacity  style={styles.button}onPress={handlePress}>
           <Text style={styles.buttonText}>Play</Text>
         </TouchableOpacity>
@@ -61,20 +66,24 @@ const Home = () => {
           alignItems: 'center',
         },
         button:{
-          width:100,
-          height:55,
+          width:140,
+          height:70,
           alignSelf: 'center',
           justifyContent: 'center',
           paddingVertical: 10,
-          backgroundColor: 'skyblue',
+          backgroundColor: 'yellow',
           borderRadius:10,
         },
         buttonText: {
           color: 'black',
-          fontSize: 20,
+          fontSize: 22,
           fontFamily:"Raleway",
           alignSelf: 'center',
         },
+        Logo: {
+          height:300,
+          width:300
+        }
       });
 
 export default Home

@@ -1,4 +1,4 @@
-import { View,Modal, StyleSheet,Image, Alert ,Text, TouchableOpacity,SafeAreaView,ImageBackground,FlatList } from 'react-native';
+import { View,Modal, StyleSheet,Image, Alert ,Text, TouchableOpacity,SafeAreaView,ImageBackground,StatusBar } from 'react-native';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import React, { useState,Component,useEffect,useMemo } from 'react';
 import { useFonts } from 'expo-font';
@@ -54,6 +54,7 @@ const Scores = () => {
 
     return (
       <SafeAreaView style={styles.safeArea}>
+        <StatusBar hidden={true} />
           <View style={styles.HomeButton}>
             <TouchableOpacity onPress={GoHome}>
               <Image
@@ -67,8 +68,10 @@ const Scores = () => {
             {names.map((name, index) => (
               <Text key={index} style={styles.text}>
                 {name}
+                {name === 'Mahmud' && ''}
               </Text>
             ))}
+            
           </View>
           
           <View style={styles.right}>
@@ -139,7 +142,7 @@ const Scores = () => {
       Continue:{
         backgroundColor: 'lightblue',
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 15,
         marginTop:10,
       },
       

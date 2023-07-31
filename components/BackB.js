@@ -11,14 +11,14 @@ const GoBackButton = ({ onPress }) => {
 
     const handler = onPress ? onPress : handleGoBack;
     return (
-    <View style={styles.goBackButton}>
-    <TouchableOpacity  onPress={handler}>
+    
+    <TouchableOpacity style={styles.goBackButton} onPress={handler}>
         <Image
         style={styles.Imagecontainer}
         source={require('../assets/icons/chevron-left.png')}
         />
       </TouchableOpacity>
-      </View>
+      
       );
 };
 
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         height:50,
         width:50,
-        marginTop:30,
-        marginLeft:10,
+        marginTop:50,
+        marginLeft:15,
         backgroundColor: 'lightgreen',
         borderRadius: 30,
       },

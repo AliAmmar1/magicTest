@@ -1,4 +1,4 @@
-import {  View,Modal, StyleSheet,Image, TextInput,Text, TouchableOpacity,SafeAreaView,ImageBackground,FlatList } from 'react-native';
+import {  View,Modal, StyleSheet,Image, TextInput,Text, TouchableOpacity,SafeAreaView,StatusBar,FlatList,ImageBackground } from 'react-native';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import React, { useState,Component,useEffect } from 'react';
 import {MaterialIcons} from '@expo/vector-icons';
@@ -99,9 +99,9 @@ const Players = () => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-
+            <StatusBar hidden={true} />
             <Modal visible={modalOpen} animationType='Slide' >
-                <SafeAreaView>
+                <SafeAreaView >
                     <MaterialIcons
                     name='close'
                     size={30}
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     marginRight:3
   },
   button: {
-    top:270,
+    top:340,
     position: 'absolute',
     alignSelf: 'center',
     paddingVertical: 10,
@@ -207,12 +207,12 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize:20,
-    height: 40,
-    width:190,
+    height: 50,
+    width:240,
     borderWidth: 2,
-    borderRadius: 5,
+    borderRadius: 25,
     paddingHorizontal: 10,
-    marginTop: 100,
+    marginTop: 150,
     alignSelf: 'center',
     textAlign:'center',
 
@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
     padding:10,
     borderRadius:10,
     alignSelf:'center',
+    top:30,
   },
   itemContainer: {
     color:'black',
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 12,
     marginVertical: 5,
-    width:100,
+    width:140,
     height:47,
   },
   itemText: {
@@ -266,7 +267,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     width: 100,
-    
   },
   delete:{
     alignItems:'center',

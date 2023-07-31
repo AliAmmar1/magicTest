@@ -1,4 +1,4 @@
-import { View,Modal, StyleSheet,Image, Alert,Text, TouchableOpacity,SafeAreaView,ImageBackground,FlatList } from 'react-native';
+import { View,Modal, StyleSheet,Image, Alert,Text, TouchableOpacity,SafeAreaView,StatusBar,FlatList } from 'react-native';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import React, { useState,Component,useEffect,useMemo } from 'react';
 import GoBackButton from '../components/BackB'
@@ -68,7 +68,7 @@ const instructions= () => {
               style: 'cancel',
             },
             {
-              text: 'la teze',
+              text: 'Yes',
               onPress: () => {
                 navigation.goBack();
               },
@@ -81,7 +81,7 @@ const instructions= () => {
 
       return(
       <SafeAreaView style={styles.safeArea}>
-        
+        <StatusBar hidden={true} />
        <GoBackButton onPress={handleGoBack}/>
       <View style={styles.message}>
         {showMessage1 && <Text style={styles.question}>{message1}</Text>}
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontSize:20,
         fontWeight:'bold',
+        color:'white'
       },
       show:{
         alignSelf:'center',
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
         top:50,
         fontFamily:"Raleway",
         fontSize:26,
-          },
+      },
       });
 
 export default instructions;

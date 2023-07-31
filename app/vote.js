@@ -1,9 +1,8 @@
-import { View,Modal, StyleSheet,Image, Animated ,Text, ActivityIndicator, Linking  , TouchableOpacity,SafeAreaView,ImageBackground,FlatList, Touchable } from 'react-native';
+import { View,Modal, StyleSheet,Image, Animated ,Text, ActivityIndicator, StatusBar  , TouchableOpacity,SafeAreaView,ImageBackground,FlatList, Touchable } from 'react-native';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import React, { useState, useRef,useEffect,useMemo  } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import * as Animatable from 'react-native-animatable';
 
 const Voting = () => {
   
@@ -18,6 +17,34 @@ const Voting = () => {
     const message=names[index]+" vote who you think is OUT";
     const [disabled, setDisabled] = useState(false);
     const [selectedButton, setSelectedButton] = useState(null);
+    const [show,setShow] = useState(false);
+    const pulseAnimation = new Animated.Value(1);
+
+  useEffect(() => {
+    if (show) {
+      startPulseAnimation();
+    } else {
+      pulseAnimation.setValue(1);
+    }
+  }, [show]);
+
+  const startPulseAnimation = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnimation, {
+          toValue: 1.2,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnimation, {
+          toValue: 1,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ]),
+      { iterations: 2 } 
+    ).start();
+  };
 
 
       const showOption = () => {
@@ -119,6 +146,7 @@ const Voting = () => {
               setTraversalCount(traversalCount + 1);
             } else {
               setDisplayText(names[out]);
+              setShow(true);
             }
           }
         }, 35);
@@ -128,7 +156,7 @@ const Voting = () => {
     }, [currentIndex, traversalCount, isLastButtonPressed, names]);
     
     useEffect(() => {
-      if (currentIndex === names.length) {
+      if (currentIndex === names.length && traversalCount===8) {
         setDisplayText(names[out]);
       }
     }, [currentIndex, names]);
@@ -186,7 +214,7 @@ const Voting = () => {
     const renderOptions = () => {
         return (
           <View style={styles.OptionsContainer}>
-            <Text style={styles.title}>{names[out]} try to guess player.</Text>
+            <Text style={styles.title}>{names[out]} try to guess the player.</Text>
             {randomPlayers.map((player, idx) => (
               
               <TouchableOpacity  key={idx} style={[
@@ -211,11 +239,17 @@ const Voting = () => {
       if (index === names.length) {
         return (
           <View>
-            <TouchableOpacity onPress={showOption} style={styles.Center}>
-              
-              <Text style={styles.text}>{displayText}</Text>
+            
+            <TouchableOpacity activeOpacity={1} style={styles.Center}>
+            <Animated.Text style={[styles.text, { transform: [{ scale: pulseAnimation }] }]}>{displayText}</Animated.Text>
             </TouchableOpacity>
+            {show && (
+            <TouchableOpacity style={styles.next} onPress={showOption}>
+                    <Text style={styles.nextText} >Next</Text>
+                </TouchableOpacity>
+            )}
           </View>
+
         );
       }
     };
@@ -240,10 +274,10 @@ const Voting = () => {
 };
 
       return(
-        <SafeAreaView>
-      
+        <SafeAreaView style={styles.safeArea} >
+      <StatusBar hidden={true} />
       <View style={styles.header}>
-      {index !== names.length && <Text style={styles.text}>{message}</Text>}
+      {index !== names.length && <Text style={styles.message}>{message}</Text>}
       </View>
       {showOptions ? (
         <View>{renderOptions()}</View>
@@ -263,16 +297,6 @@ const styles =StyleSheet.create({
     safeArea: {
         flex: 1,
         },
-    goBackButton: {
-        alignItems:"center",
-        justifyContent:"center",
-        height:50,
-        width:50,
-        marginTop:30,
-        marginLeft:10,
-        backgroundColor: 'lightgreen',
-        borderRadius: 30,
-      },
       Imagecontainer: {
         width: 40,
         height: 40,
@@ -288,19 +312,18 @@ const styles =StyleSheet.create({
         alignItems:'center',
         alignSelf:'center',
         justifyContent:'center',
-        top:60,
-        margin:40,
+        top:80,
+        margin:25,
         backgroundColor:'skyblue',
-        width:250,
+        width:200,
         height:60,
-        borderRadius:50,
+        borderRadius:10,
       },
       text:{
         fontFamily:"Raleway",
-        fontSize:20,
+        fontSize:23,
       },
       buttonText:{
-
         fontFamily:"Raleway",
         fontSize:16,
       },
@@ -323,7 +346,6 @@ const styles =StyleSheet.create({
         fontFamily:"Raleway",
       },
       title:{
-        backgroundColor:"white",
         bottom:20,
         fontSize:18,
         fontFamily:"Raleway",
@@ -333,7 +355,7 @@ const styles =StyleSheet.create({
       },
       Center:{
         position: 'relative',
-        top:150,
+        top:160,
         alignSelf:'center',
         alignItems:'center',
         justifyContent:'center',
@@ -348,10 +370,12 @@ const styles =StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         width:300,
+        height:40,
+        borderRadius:150,
         alignItems:'center',
       },
       OptionsContainer:{
-        top:50,
+        top:70,
         position:'relative',
         justifyContent: 'center',
         alignItems: 'center',
@@ -360,7 +384,6 @@ const styles =StyleSheet.create({
         backgroundColor: 'yellow',
       },
       hide:{
-        backgroundColor:'white',
         height:40,
       },
       correctButton: {
@@ -372,6 +395,28 @@ const styles =StyleSheet.create({
       VotingButtons: {
         top:10,
         margin:10,
+      },
+      message: {
+        fontFamily:"Raleway",
+        fontSize:20,
+        top:25,
+      },
+      next:{
+        alignSelf:'center',
+        alignItems:'center',
+        bottom:120,
+        backgroundColor: 'green',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        width: 100,
+        top:250,
+      },
+      nextText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+        fontFamily:"Raleway",
       }
 })
 

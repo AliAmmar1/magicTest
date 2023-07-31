@@ -1,4 +1,4 @@
-import { View,Modal, StyleSheet,Image, TextInput,Text, TouchableOpacity,SafeAreaView,ImageBackground,FlatList } from 'react-native';
+import { View,Modal, StyleSheet,Image, TextInput,Text, TouchableOpacity,SafeAreaView,ImageBackground,StatusBar } from 'react-native';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import React, { useState,Component,useEffect,useMemo } from 'react';
 
@@ -38,6 +38,7 @@ const question = () => {
       return(
         
           <SafeAreaView style={styles.safeArea}>
+            <StatusBar hidden={true} />
             {isButtonVisible && (
            <View style={styles.goBackButton}>
       <TouchableOpacity  onPress={handleGoBack}>
@@ -57,7 +58,7 @@ const question = () => {
         </View>
         <View style={styles.Viewcontainer}>
       <TouchableOpacity onPress={generateRandomNumbers} style={styles.next}><Text style={styles.buttonText}>Next Question</Text></TouchableOpacity>
-      <TouchableOpacity onPress={ToVote} style={styles.vote}><Text style={styles.buttonText}>Vote</Text></TouchableOpacity>
+      <TouchableOpacity onPress={ToVote} style={styles.vote}><Text style={{ ...styles.buttonText, color:'black' }}>Vote</Text></TouchableOpacity>
     </View>
         
         </SafeAreaView>
@@ -66,9 +67,8 @@ const question = () => {
 
 const styles = StyleSheet.create({
     safeArea: {
-        flex: 1,
+      flex: 1,
         },
-        
     question:{
       textAlign: 'center',
       alignItems:'center',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
       },
       buttonText: {
-        color: 'black',
+        color: 'white',
         fontSize: 18,
         alignSelf: 'center',
         fontFamily:"Raleway",
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 10,
         width: 200,
-        height:70,
+        height:65,
         top:170,
       },
       vote:{
