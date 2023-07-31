@@ -3,7 +3,6 @@
 workflows:
   react_native_build:
     name: React Native Build
-    instance_type:windows_x2
     scripts:
       # Define your build commands here.
       # For React Native, it's typically "npm install" and "npm run build".
