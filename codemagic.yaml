@@ -4,10 +4,23 @@ workflows:
   react_native_build:
     name: React Native Build
     scripts:
-      # Define your build commands here.
-      # For React Native, it's typically "npm install" and "npm run build".
-      # Adjust these commands based on your project setup.
+      # Install required dependencies (Node.js, CocoaPods, etc.).
       - name: Install Dependencies
+        script: |
+          nvm install 14
+          nvm use 14
+          npm install -g cocoapods
+
+      # Install Node.js dependencies.
+      - name: Install Node.js Dependencies
         script: npm install
-      - name: Build App
-        script: npm run build
+
+      # Install CocoaPods dependencies.
+      - name: Install CocoaPods Dependencies
+        script: cd ios && pod install && cd ..
+
+      # Build the iOS app.
+      - name: Build iOS App
+        script: |
+          # Replace 'your_scheme' with your app's scheme (e.g., MyAwesomeApp).
+          xcodebuild -workspace KickOut.xcworkspace -scheme acme -configuration Release -quiet
